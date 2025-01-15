@@ -1,16 +1,37 @@
+#!/usr/bin/env python3
+import os
 import pickle
 import random
 import numpy as np
 import time
-import cv2
+from enum import Enum
+
+current_file_path = os.path.abspath(__file__)
+current_dir = os.path.dirname(current_file_path)
+input_directory = f'{current_dir}/output-creation-array'
+output_directory = f'{current_dir}/output-mezcla-array'
+
+class FileName(Enum):
+    # Input files
+    DATA_POSITIVE = 'datos.dat'
+    DATA_POSITIVE_TEST = 'datos_test.dat'
+    DATA_NEGATIVE = 'datos2.dat'
+    DATA_NEGATIVE_TEST = 'datos_test2.dat'
+
+    # Output files
+    DATA_TRAINING = 'datos_entrenamiento.dat'
+    DATA_TRAINING_LABEL = 'label_entrenamiento.dat'
+    DATA_TEST = 'datos_test.dat'
+    DATA_TEST_LABEL = 'label_test.dat'
+
 ####################################################################3
 #Carga de datos de entrenamiento
-datos = open('datos/datos.dat', 'rb')
+datos = open(f'{input_directory}/{FileName.DATA_POSITIVE.value}', 'rb')
 data_train = pickle.load(datos)
 #data_train2 = np.asarray(lista)
 datos.close()
 
-datos2 = open('datos/datos2.dat', 'rb')
+datos2 = open(f'{input_directory}/{FileName.DATA_NEGATIVE.value}', 'rb')
 data_train2 = pickle.load(datos2)
 #data_train = np.asarray(lista)
 datos2.close()
@@ -73,8 +94,8 @@ label_entranamiento  = etiquetas[:length_train]
 datos_test = datos[length_train:]
 label_test  = etiquetas[length_train:]
 
-del datos
-del etiquetas
+# del datos
+# del etiquetas
 
 print ( "Imagenes para entrenamiento: " + str(len(datos_entranamiento)))
 
@@ -91,11 +112,11 @@ del etiquetas
 #######################################################################
 #Carga de datos de validacion
 
-datos = open('datos/datos_test.dat', 'rb')
+datos = open(f'{input_directory}/{FileName.DATA_POSITIVE_TEST.value}', 'rb')
 data_test = pickle.load(datos)
 datos.close()
 
-datos2 = open('datos/datos_test2.dat', 'rb')
+datos2 = open(f'{input_directory}/{FileName.DATA_NEGATIVE_TEST.value}', 'rb')
 data_test2 = pickle.load(datos2)
 datos2.close()
 
@@ -132,25 +153,25 @@ time.sleep(20)
 
 
 ##################################################################
-archivo = open('datos/datos_entranamiento.dat', 'wb')
+archivo = open(f'{output_directory}/{FileName.DATA_TRAINING.value}', 'wb')
 pickle.dump(datos_entranamiento, archivo)
 archivo.close()
 del datos_entranamiento
 time.sleep(20)
 
-archivo2 = open('datos/label_entranamiento.dat', 'wb')
+archivo2 = open(f'{output_directory}/{FileName.DATA_TRAINING_LABEL.value}', 'wb')
 pickle.dump(label_entranamiento, archivo2)
 archivo2.close()
 del label_entranamiento
 time.sleep(20)
 
-archivo3 = open('datos/datos_test.dat', 'wb')
+archivo3 = open(f'{output_directory}/{FileName.DATA_TEST.value}', 'wb')
 pickle.dump(datos_test, archivo3)
 archivo3.close()
 del datos_test
 time.sleep(20)
 
-archivo4 = open('datos/label_test.dat', 'wb')
+archivo4 = open(f'{output_directory}/{FileName.DATA_TEST_LABEL.value}', 'wb')
 pickle.dump(label_test, archivo4)
 archivo4.close()
 del label_test
