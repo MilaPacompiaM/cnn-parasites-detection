@@ -1,10 +1,23 @@
-import cv2
-import numpy as np
+#!/usr/bin/env python3
 import os
+import cv2
 import time
 import pickle
 from numpy import *
 
+current_file_path = os.path.abspath(__file__)
+current_dir = os.path.dirname(current_file_path)
+
+# Se definen las rutas de donde se encuentra la data
+#data= '/home/citesoft_barcos/Escritorio/code/ia-parasitos/Data_IA_Procesada/Positivo'
+#data2='/home/citesoft_barcos/Escritorio/code/ia-parasitos/Data_IA_Procesada/Negativo'
+data = f'{current_dir}/trimmings/positives'
+data2 = f'{current_dir}/trimmings/negatives'
+output_directory = f'{current_dir}/output-creation-array'
+print('-- creacion_array.py --')
+print('- data', data)
+print('- data2', data2)
+print('- output_directory', output_directory)
 #Cambiamos el orde de manera aleatoria a los arreglos
 def mezclar_lista(lista_original):
     #Establecemos listas auxiliares 
@@ -22,10 +35,6 @@ def mezclar_lista(lista_original):
 
 ###########################################################################################
 # CARGA DE DATOS
-
-#Se definen las rutas de donde se encuentra la data
-data= '/home/citesoft_barcos/Escritorio/code/ia-parasitos/Data_IA_Procesada/Positivo'
-data2='/home/citesoft_barcos/Escritorio/code/ia-parasitos/Data_IA_Procesada/Negativo'
 
 #Definimos los arreglos donde se guardaran los datos
 data_train=[] # positivo
@@ -122,11 +131,11 @@ print ( "Imagenes para validacion positivos: " + str(len(datos_aux_test)))
 
 #Se guarda los arreglos
 
-archivo = open('datos/datos_practica.dat', 'wb')
+archivo = open(f'{output_directory}/datos.dat', 'wb')
 pickle.dump(datos_aux, archivo)
 archivo.close()
 
-archivo = open('datos/datos_test_practica.dat', 'wb')
+archivo = open(f'{output_directory}/datos_test.dat', 'wb')
 pickle.dump(datos_aux_test, archivo)
 archivo.close()
 
@@ -182,10 +191,10 @@ print ("Termine Aumenter datos negativos 2")
 print ( "Imagenes para entrenamiento Negativos: " + str(len(datos_aux)))
 print ( "Imagenes para validacion Negativos: " + str(len(datos_aux_test)))
 
-archivo = open('datos/datos2_practica.dat', 'wb')
+archivo = open(f'{output_directory}/datos2.dat', 'wb')
 pickle.dump(datos_aux, archivo)
 archivo.close()
 
-archivo = open('datos/datos_test2_practica.dat', 'wb')
+archivo = open(f'{output_directory}/datos_test2.dat', 'wb')
 pickle.dump(datos_aux_test, archivo)
 archivo.close()
