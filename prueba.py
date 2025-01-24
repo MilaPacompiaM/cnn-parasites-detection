@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 import os
-import skimage.exposure
-from PIL import Image
 
 carpeta="/home/citesoft_barcos/Escritorio/tesis/Data_IA/Ascaris/"
 names=os.listdir(carpeta)
